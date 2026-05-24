@@ -1,0 +1,42 @@
+### Agregar posicion
+POST http://localhost:8089/posiciones
+Content-Type: application/json
+
+{
+  "clubId": 1,
+  "nombreClub": "Barcelona",
+  "puntos": 3,
+  "partidosJugados": 1,
+  "ganados": 1,
+  "empatados": 0,
+  "perdidos": 0,
+  "golesFavor": 2,
+  "golesContra": 1,
+  "diferenciaGoles": 1
+}
+
+### Listar posiciones
+GET http://localhost:8089/posiciones
+
+### Obtener posicion por ID
+GET http://localhost:8089/posiciones/1
+
+### Actualizar posicion
+PUT http://localhost:8089/posiciones/1
+Content-Type: application/json
+
+{
+  "clubId": 1,
+  "nombreClub": "Barcelona",
+  "puntos": 6,
+  "partidosJugados": 2,
+  "ganados": 2,
+  "empatados": 0,
+  "perdidos": 0,
+  "golesFavor": 5,
+  "golesContra": 2,
+  "diferenciaGoles": 3
+}
+
+### Eliminar posicion
+DELETE http://localhost:8089/posiciones/1
