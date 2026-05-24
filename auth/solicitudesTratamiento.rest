@@ -1,0 +1,7 @@
+POST http://localhost:8090/auth/login
+Content-Type: application/json
+
+{
+  "correo": "tais@gmail.com",
+  "password": "1234"
+}
