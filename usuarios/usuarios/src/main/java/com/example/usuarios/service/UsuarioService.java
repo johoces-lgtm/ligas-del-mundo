@@ -7,15 +7,19 @@ import com.example.usuarios.dto.request.UsuarioRequestDto;
 import com.example.usuarios.model.Usuario;
 import com.example.usuarios.repository.UsuarioRepository;
 import com.example.usuarios.exception.ResourceNotFoundException;
+import com.example.usuarios.client.ClubesClient;
+import com.example.usuarios.dto.response.DtoClubesResponse;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository repository;
     private final BCryptPasswordEncoder encoder;
+    private final ClubesClient clubesClient;
 
-    public UsuarioService(UsuarioRepository repository) {
+    public UsuarioService(UsuarioRepository repository, ClubesClient clubesClient) {
         this.repository = repository;
+        this.clubesClient = clubesClient;
         this.encoder = new BCryptPasswordEncoder();
     }
 
@@ -29,6 +33,12 @@ public class UsuarioService {
     }
 
     public Usuario guardar(UsuarioRequestDto dto) {
+        DtoClubesResponse club = clubesClient.obtenerClubPorId(dto.getClubFavoritoId());
+        if (club == null) {
+            throw new ResourceNotFoundException("No se puede registrar el usuario. El Club Favorito con ID: " 
+                    + dto.getClubFavoritoId() + " no existe en el sistema de Clubes.");
+        }
+
         Usuario usuario = Usuario.builder()
                 .nombre(dto.getNombre())
                 .correo(dto.getCorreo())
@@ -42,6 +52,12 @@ public class UsuarioService {
     public Usuario actualizar(Long id, UsuarioRequestDto dto) {
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se puede actualizar. Usuario no encontrado con ID: " + id));
+
+        DtoClubesResponse club = clubesClient.obtenerClubPorId(dto.getClubFavoritoId());
+        if (club == null) {
+            throw new ResourceNotFoundException("No se puede actualizar el usuario. El Club Favorito con ID: " 
+                    + dto.getClubFavoritoId() + " no existe en el sistema de Clubes.");
+        }
 
         usuario.setNombre(dto.getNombre());
         usuario.setCorreo(dto.getCorreo());

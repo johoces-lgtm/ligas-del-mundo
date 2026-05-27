@@ -1,6 +1,5 @@
 package main.java.com.example.usuarios.dto.response;
 
-
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Data;
