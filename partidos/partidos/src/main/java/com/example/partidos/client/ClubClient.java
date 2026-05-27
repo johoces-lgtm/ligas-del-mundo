@@ -2,8 +2,7 @@ package com.example.partidos.client;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import com.example.partidos.dto.ClubDto;
+import com.example.partidos.dto.response.ClubDto;
 
 @Component
 public class ClubClient {

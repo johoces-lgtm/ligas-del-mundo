@@ -1,4 +1,4 @@
-package com.example.partidos.dto;
+package com.example.partidos.dto.response;
 
 import lombok.Data;
 
@@ -6,6 +6,5 @@ import lombok.Data;
 public class EstadioDto {
 
     private Long id;
-
     private String nombre;
 }

@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 import com.example.partidos.client.ClubClient;
 import com.example.partidos.client.EstadioClient;
 import com.example.partidos.client.LigaClient;
-import com.example.partidos.dto.PartidoRequestDto;
+import com.example.partidos.dto.request.PartidoRequestDto;
 import com.example.partidos.model.Partido;
 import com.example.partidos.repository.PartidoRepository;
+import com.example.partidos.exception.ResourceNotFoundException;
 
 @Service
 public class PartidoService {
@@ -29,7 +30,8 @@ public class PartidoService {
     }
 
     public Partido buscar(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Partido no encontrado con ID: " + id));
     }
 
     public Partido guardar(PartidoRequestDto dto) {
@@ -54,24 +56,26 @@ public class PartidoService {
     }
 
     public Partido actualizar(Long id, PartidoRequestDto dto) {
-        Partido partido = repository.findById(id).orElse(null);
-        if (partido != null) {
-            partido.setLigaId(dto.getLigaId());
-            partido.setClubLocalId(dto.getClubLocalId());
-            partido.setClubVisitaId(dto.getClubVisitaId());
-            partido.setEstadioId(dto.getEstadioId());
-            partido.setNombreLocal(dto.getNombreLocal());
-            partido.setNombreVisita(dto.getNombreVisita());
-            partido.setGolesLocal(dto.getGolesLocal());
-            partido.setGolesVisita(dto.getGolesVisita());
-            partido.setEstado(dto.getEstado());
-            partido.setTemporada(dto.getTemporada());
-            return repository.save(partido);
-        }
-        return null;
+        Partido partido = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No se puede actualizar. Partido no encontrado con ID: " + id));
+        
+        partido.setLigaId(dto.getLigaId());
+        partido.setClubLocalId(dto.getClubLocalId());
+        partido.setClubVisitaId(dto.getClubVisitaId());
+        partido.setEstadioId(dto.getEstadioId());
+        partido.setNombreLocal(dto.getNombreLocal());
+        partido.setNombreVisita(dto.getNombreVisita());
+        partido.setGolesLocal(dto.getGolesLocal());
+        partido.setGolesVisita(dto.getGolesVisita());
+        partido.setEstado(dto.getEstado());
+        partido.setTemporada(dto.getTemporada());
+        return repository.save(partido);
     }
 
     public void eliminar(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("No se puede eliminar. Partido no encontrado con ID: " + id);
+        }
         repository.deleteById(id);
     }
 }
