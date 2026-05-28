@@ -1,6 +1,6 @@
 package com.example.auth.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.auth.dto.LoginRequestDto;
@@ -10,15 +10,11 @@ import com.example.auth.dto.LoginResponseDto;
 public class AuthService {
 
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
-    private final BCryptPasswordEncoder encoder;
-
-    public AuthService(
-            JwtService jwtService,
-            BCryptPasswordEncoder encoder) {
-
+    public AuthService(JwtService jwtService, PasswordEncoder passwordEncoder) {
         this.jwtService = jwtService;
-        this.encoder = encoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public LoginResponseDto login(LoginRequestDto dto) {
