@@ -1,7 +1,7 @@
 package com.example.usuarios.model;
 
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -20,15 +20,19 @@ public class Usuario {
     private Long id;
 
     @Column(nullable = false)
+    @JsonProperty("nombre_usuarios")
     private String nombre;
 
     @Column(nullable = false, unique = true)
+    @JsonProperty("correo_usuarios")
     private String correo;
 
     @Column(nullable = false)
+    @JsonProperty("password_usuarios")
     private String password;
 
     @Column(nullable = false)
+    @JsonProperty("rol_usuarios")
     private String rol;
 
     @Column(nullable = false)
