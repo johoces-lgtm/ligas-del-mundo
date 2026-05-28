@@ -1,6 +1,6 @@
 package com.example.auth.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.auth.client.UsuarioClient;
 import com.example.auth.dto.request.LoginRequestDto;
@@ -12,6 +12,7 @@ import com.example.auth.exception.BadCredentialsException;
 public class AuthService {
 
     private final JwtService jwtService;
+<<<<<<< HEAD
     private final BCryptPasswordEncoder encoder;
     private final UsuarioClient usuarioClient;
 
@@ -19,6 +20,13 @@ public class AuthService {
         this.jwtService = jwtService;
         this.encoder = encoder;
         this.usuarioClient = usuarioClient;
+=======
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthService(JwtService jwtService, PasswordEncoder passwordEncoder) {
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+>>>>>>> 0176589b97d406ff537a2beaaede876753e24499
     }
 
     public LoginResponseDto login(LoginRequestDto dto) {
