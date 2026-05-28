@@ -2,8 +2,7 @@ package com.example.partidos.client;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import com.example.partidos.dto.LigaDto;
+import com.example.partidos.dto.response.LigaDto;
 
 @Component
 public class LigaClient {
@@ -15,12 +14,11 @@ public class LigaClient {
     }
 
     public LigaDto obtenerLiga(Long id) {
-
         return webClient
-                .get()
-                .uri("http://localhost:8081/api/ligas/" + id)
-                .retrieve()
-                .bodyToMono(LigaDto.class)
-                .block();
-    }
+            .get()
+            .uri("http://localhost:8083/api/ligas/" + id)
+            .retrieve()
+            .bodyToMono(LigaDto.class)
+            .block();
 }
+    }

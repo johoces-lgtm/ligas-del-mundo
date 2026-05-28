@@ -1,4 +1,4 @@
-package com.example.partidos.dto;
+package com.example.partidos.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
