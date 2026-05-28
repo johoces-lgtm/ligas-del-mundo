@@ -1,4 +1,4 @@
-package main.java.com.example.usuarios.client;
+package com.example.usuarios.client;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
