@@ -1,4 +1,4 @@
-package main.java.com.example.usuarios.dto.response;
+package com.example.usuarios.dto.response;
 
 import lombok.Data;
 
