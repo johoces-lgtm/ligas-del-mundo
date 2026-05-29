@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import com.example.usuarios.dto.response.DtoApiError;
+
+import com.example.usuarios.dto.DtoApiError;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
