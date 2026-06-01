@@ -1,0 +1,39 @@
+### LISTAR USUARIOS
+GET http://localhost:8087/api/usuarios
+Content-Type: application/json
+
+
+### BUSCAR USUARIO POR ID
+GET http://localhost:8087/api/usuarios/1
+Content-Type: application/json
+
+
+### GUARDAR USUARIO
+POST http://localhost:8087/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Tais",
+  "correo": "tais@gmail.com",
+  "password": "1234",
+  "rol": "ADMIN",
+  "clubFavoritoId": 1
+}
+
+
+### ACTUALIZAR USUARIO
+PUT http://localhost:8087/api/usuarios/1
+Content-Type: application/json
+
+{
+  "nombre": "Tais Orellana",
+  "correo": "taisorellana@gmail.com",
+  "password": "12345",
+  "rol": "USER",
+  "clubFavoritoId": 2
+}
+
+
+### ELIMINAR USUARIO
+DELETE http://localhost:8087/api/usuarios/1
+Content-Type: application/json

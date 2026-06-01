@@ -1,0 +1,21 @@
+package cl.duoc.football_api.dto.request;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class PosicionRequest {
+    private Long clubId;
+    private String nombreClub;
+    private Integer puntos;
+    private Integer partidosJugados;
+    private Integer ganados;
+    private Integer empatados;
+    private Integer perdidos;
+    private Integer golesFavor;
+    private Integer golesContra;
+    private Integer diferenciaGoles;
+    private Integer temporada;
+    private Long ligaId;
+}
