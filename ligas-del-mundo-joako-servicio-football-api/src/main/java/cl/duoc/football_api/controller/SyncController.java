@@ -1,20 +1,32 @@
 package cl.duoc.football_api.controller;
 
+import cl.duoc.football_api.dto.DtoApiError;
 import cl.duoc.football_api.dto.response.ApiEjecucionResponse;
 import cl.duoc.football_api.model.ApiModel;
 import cl.duoc.football_api.service.ApiService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Slf4j
 @RestController
 @RequestMapping("/api/sync")
+@Tag(name = "Orquestador Maestro (Sync)", description = "Puntos de entrada críticos del Gateway Orquestador para poblar y distribuir datos desde la API externa Sports")
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "401", description = "Acceso Denegado: Token JWT ausente, modificado o expirado", 
+                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+    @ApiResponse(responseCode = "403", description = "Permisos insuficientes: El rol del usuario no autoriza esta operación",
+                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+})
 public class SyncController {
 
     private final ApiService apiService;
@@ -24,6 +36,15 @@ public class SyncController {
     }
 
     @PostMapping("/ligas")
+    @Operation(summary = "Sincronizar Ligas Mundiales Principales", description = "Extrae de forma remota las ligas configuradas y las inyecta en el microservicio local de Ligas")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Sincronización masiva de ligas finalizada correctamente",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiEjecucionResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo crítico en el procesamiento o timeout con la API externa", 
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<ApiEjecucionResponse> iniciarSincronizacionLigas() {
         log.info("POST /api/sync/ligas - Iniciando extracción...");
         ApiEjecucionResponse respuesta = apiService.procesarLigas(); 
@@ -31,12 +52,28 @@ public class SyncController {
     }
 
     @GetMapping("/logs")
+    @Operation(summary = "Obtener Historial de Extracciones", description = "Recupera un listado completo de los procesos de sincronización ejecutados, incluyendo detalles como fecha, cantidad de registros procesados y resultados")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Historial de extracciones recuperado correctamente",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiModel.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno al recuperar el historial de extracciones",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<List<ApiModel>> obtenerHistorialExtracciones() {
         log.info("GET /api/sync/logs - Solicitando historial...");
         return ResponseEntity.ok(apiService.obtenerHistorial());
     }
 
     @PutMapping("/logs/{id}")
+    @Operation(summary = "Actualizar Observación de Registro", description = "Permite modificar la observación asociada a un registro específico del historial de extracciones")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Observación actualizada correctamente",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiModel.class))),
+        @ApiResponse(responseCode = "404", description = "Registro no encontrado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno al actualizar la observación",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<ApiModel> actualizarLog(@PathVariable Long id, @RequestParam String observacion) {
         log.info("PUT /api/sync/logs/{} - Actualizando observación...", id);
         ApiModel registroActualizado = apiService.actualizarObservacion(id, observacion);
@@ -44,6 +81,15 @@ public class SyncController {
     }
 
     @DeleteMapping("/logs/{id}")
+    @Operation(summary = "Eliminar Registro de Extracción", description = "Permite eliminar un registro específico del historial de extracciones")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Registro eliminado correctamente",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "404", description = "Registro no encontrado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno al eliminar el registro",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<String> eliminarLog(@PathVariable Long id) {
         log.info("DELETE /api/sync/logs/{} - Eliminando registro...", id);
         apiService.eliminarRegistro(id);
@@ -51,6 +97,15 @@ public class SyncController {
     }
 
     @PostMapping("/clubes")
+    @Operation(summary = "Sincronizar Carga Masiva de Clubes, Directores Técnicos y Estadios", description = "Proceso maestro multi-temporada que pobla de forma paralela los microservicios locales de infraestructura deportiva")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Clubes y dependencias locales/remotas mapeadas con éxito",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiEjecucionResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno en la manipulación de datos o caída de servicios remotos", 
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<ApiEjecucionResponse> iniciarSincronizacionClubes() {
         log.info("POST /api/sync/clubes - Ejecutando carga masiva de equipos...");
         ApiEjecucionResponse respuesta = apiService.procesarClubes();
@@ -58,6 +113,15 @@ public class SyncController {
     }
 
     @PostMapping("/jugadores")
+    @Operation(summary = "Sincronizar Plantillas de Jugadores por Temporada", description = "Escanea la base de datos de clubes de forma local y extrae de forma remota todos los jugadores activos en la temporada indicada")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Petición procesada y flujo de inyección masiva finalizado con éxito", 
+                     content = @Content(mediaType = "text/plain", schema = @Schema(example = "Extracción de jugadores finalizada..."))),
+        @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo controlado: La API remota rechazó la petición o se agotaron las cuotas", 
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<?> sincronizarJugadores(@RequestParam(defaultValue = "2024") String temporada) {
         log.info("Recibida petición REST para sincronizar jugadores de la temporada {}", temporada);
         
@@ -71,6 +135,15 @@ public class SyncController {
     }
 
     @PostMapping("/posiciones")
+    @Operation(summary = "Sincronizar Tablas de Posiciones de las Ligas", description = "Orquesta las tablas dinámicas de clasificación deportiva para las ligas locales registradas")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Rendimiento y posiciones guardadas correctamente",
+                     content = @Content(mediaType = "text/plain", schema = @Schema(example = "Sincronización de posiciones finalizada con éxito."))),
+        @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo al procesar o transmitir el array de posiciones hacia el servicio correspondiente",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<?> sincronizarPosiciones() {
         log.info("Petición para sincronizar posiciones de las 3 temporadas");
         try {
@@ -82,6 +155,15 @@ public class SyncController {
     }
 
     @PostMapping("/partidos")
+    @Operation(summary = "Sincronizar Fixtures y Calendario de Partidos", description = "Descarga la totalidad de las jornadas competitivas emparejándolas con los microservicios core correspondientes")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Calendario de fixtures emparejado e inyectado con éxito",
+                        content = @Content(mediaType = "text/plain", schema = @Schema(example = "Sincronización de partidos finalizada..."))),
+        @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo crítico en el JSON externo de partidos",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<?> sincronizarPartidos() {
         log.info("Petición para sincronizar partidos de las 3 temporadas");
         try {
@@ -93,6 +175,15 @@ public class SyncController {
     }
 
     @PostMapping("/entrenadores")
+    @Operation(summary = "Sincronizar Plantillas de Directores Técnicos por Temporada", description = "Escanea la base de datos de clubes de forma local y extrae de forma remota todos los directores técnicos activos en la temporada indicada")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Petición procesada y flujo de inyección masiva finalizado con éxito", 
+                     content = @Content(mediaType = "text/plain", schema = @Schema(example = "Extracción de entrenadores finalizada..."))),
+        @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo al procesar la solicitud de extracción de entrenadores",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<ApiEjecucionResponse> iniciarSincronizacionEntrenadores() {
         log.info("POST /api/sync/entrenadores - Iniciando extracción masiva...");
         ApiEjecucionResponse respuesta = apiService.procesarEntrenadores();
@@ -100,6 +191,14 @@ public class SyncController {
     }
 
     @PostMapping("/estadios")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Estadios sincronizados con éxito",
+                     content = @Content(mediaType = "text/plain", schema = @Schema(example = "Sincronización de estadios finalizada..."))),
+        @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo al procesar la solicitud de sincronización de estadios",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<ApiEjecucionResponse> iniciarSincronizacionEstadios() {
         log.info("POST /api/sync/estadios - Iniciando extracción masiva...");
         ApiEjecucionResponse respuesta = apiService.sincronizarEstadios();
@@ -107,6 +206,14 @@ public class SyncController {
     }
 
     @PostMapping("/paises")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Países sincronizados con éxito",
+                     content = @Content(mediaType = "text/plain", schema = @Schema(example = "Sincronización de países finalizada..."))),
+            @ApiResponse(responseCode = "400", description = "Fallo de validación en la respuesta de la API externa o formato inesperado",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Fallo al procesar la solicitud de sincronización de países",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     public ResponseEntity<ApiEjecucionResponse> iniciarSincronizacionPaises() {
         log.info("POST /api/sync/paises - Iniciando extracción masiva...");
         ApiEjecucionResponse respuesta = apiService.sincronizarPaises();

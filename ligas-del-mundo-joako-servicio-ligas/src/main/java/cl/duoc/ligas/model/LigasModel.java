@@ -16,14 +16,16 @@ import lombok.NoArgsConstructor;
 public class LigasModel {
 
     @Id
+    @Column(name = "id", nullable = false, length = 10)
     private Long id;
 
-    @Column(nullable = false, unique = true )
+    @Column(name = "nombre", nullable = false, unique = true, length = 100)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(name = "pais", nullable = false, length = 100)
     private String pais;
 
+    @Column(name = "logo_url", nullable = true)
     private String logoUrl;
 
 }
