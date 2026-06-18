@@ -1,0 +1,14 @@
+**/target/
+**/*.class
+**/.mvn/wrapper/maven-wrapper.jar
+**/.idea/
+**/*.iml
+**/*.iws
+**/*.ipr
+**/.settings/
+**/.classpath
+**/.project
+**/.factorypath
+**/.apt_generated
+**/.sts4-cache
+**/.vscode/
