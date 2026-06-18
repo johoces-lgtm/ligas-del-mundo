@@ -5,7 +5,6 @@ import com.example.auth.dto.LoginRequestDto;
 import com.example.auth.dto.LoginResponseDto;
 import com.example.auth.service.AuthService;
 
-// IMPORTS DE SWAGGER OBLIGATORIOS
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
