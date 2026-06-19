@@ -1,0 +1,100 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            # Ruta pública de autenticación:
+            # Cliente llama a http://localhost:8080/api/v1/auth/login
+            # Gateway reenvía internamente a AUTH-SERVICE.
+           # 1. Microservicio Auth
+            - id: auth-service
+              uri: lb://SERVICIO-AUTH
+              predicates:
+                - Path=/api/v1/auth/** # Ruta pública de autenticación
+
+            # 2. Microservicio Países
+            - id: paises-service
+              uri: lb://SERVICIO-PAISES
+              predicates:
+                - Path=/api/v1/paises/**
+
+            # 3. Microservicio Clubes
+            - id: clubes-service
+              uri: lb://SERVICIO-CLUBES
+              predicates:
+                - Path=/api/v1/clubes/**
+
+            # 4. Microservicio Estadios
+            - id: estadios-service
+              uri: lb://SERVICIO-ESTADIOS
+              predicates:
+                - Path=/api/v1/estadios/**
+
+            # 5. Microservicio Entrenadores
+            - id: entrenadores-service
+              uri: lb://SERVICIO-ENTRENADORES
+              predicates:
+                - Path=/api/v1/entrenadores/**
+
+            # 6. Microservicio Lesiones
+            - id: lesiones-service
+              uri: lb://SERVICIO-LESIONES
+              predicates:
+                - Path=/api/v1/lesiones/**
+
+            # 7. Microservicio Ligas
+            - id: ligas-service
+              uri: lb://SERVICIO-LIGAS
+              predicates:
+                - Path=/api/v1/ligas/**
+
+            # 8. Microservicio Jugadores
+            - id: jugadores-service
+              uri: lb://SERVICIO-JUGADORES
+              predicates:
+                - Path=/api/v1/jugadores/**
+
+            # 9. Microservicio Football API
+            - id: football-api-service
+              uri: lb://SERVICIO-FOOTBALL-API
+              predicates:
+                - Path=/api/v1/football-api/**
+
+            # 10. Microservicio Posiciones
+            - id: posiciones-service
+              uri: lb://SERVICIO-POSICIONES
+              predicates:
+                - Path=/api/v1/posiciones/**
+
+            # 11. Microservicio Usuarios
+            - id: usuarios-service
+              uri: lb://SERVICIO-USUARIOS
+              predicates:
+                - Path=/api/v1/usuarios/**
+
+            # 12. Microservicio Partidos
+            - id: partidos-service
+              uri: lb://SERVICIO-PARTIDOS
+              predicates:
+                - Path=/api/v1/partidos/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
