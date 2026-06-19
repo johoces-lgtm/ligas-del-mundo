@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cl.duoc.ligas.dto.request.DtoLigasRequest; // IMPORTANTE AGREGAR ESTO
 import cl.duoc.ligas.dto.response.DtoLigasResponse;
 import cl.duoc.ligas.exception.ResourceNotFoundException;
 import cl.duoc.ligas.model.LigasModel;
@@ -38,7 +39,6 @@ public class LigasService {
     public DtoLigasResponse obtenerLigaPorId(Long id){
         log.info("Buscando liga con ID: {}", id);
         
-        
         LigasModel liga = ligasrepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Liga no encontrada con ID: " + id));
                 
@@ -50,10 +50,12 @@ public class LigasService {
         return response;
     }
 
-    public DtoLigasResponse crearLiga(DtoLigasResponse requestDto){
+    // CORRECCIÓN AQUÍ: Recibir DtoLigasRequest
+    public DtoLigasResponse crearLiga(DtoLigasRequest requestDto){
         log.info("Creando nueva liga con nombre: {}", requestDto.getNombre());
         LigasModel nuevaLiga = new LigasModel();
-        nuevaLiga.setId(requestDto.getId());
+        
+        nuevaLiga.setId(requestDto.getId()); 
         nuevaLiga.setNombre(requestDto.getNombre());
         nuevaLiga.setPais(requestDto.getPais());
         nuevaLiga.setLogoUrl(requestDto.getLogoUrl());
@@ -69,9 +71,8 @@ public class LigasService {
         return response;
     }
 
-    public DtoLigasResponse actualizarLiga(Long id, DtoLigasResponse requestDto){
+    public DtoLigasResponse actualizarLiga(Long id, DtoLigasRequest requestDto){
         log.info("Actualizando liga con ID: {}", id);
-        
         
         LigasModel ligaExistente = ligasrepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Liga no encontrada con ID: " + id));
