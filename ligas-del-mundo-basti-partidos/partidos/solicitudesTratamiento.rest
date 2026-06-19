@@ -1,0 +1,40 @@
+### Agregar partido
+POST http://localhost:8088/partidos
+Content-Type: application/json
+
+{
+  "ligaId": 1,
+  "clubLocalId": 1,
+  "clubVisitaId": 2,
+  "estadioId": 1,
+  "nombreLocal": "Barcelona",
+  "nombreVisita": "Real Madrid",
+  "golesLocal": 2,
+  "golesVisita": 1,
+  "estado": "FINALIZADO"
+}
+
+### Listar partidos
+GET http://localhost:8088/partidos
+
+### Buscar partido
+GET http://localhost:8088/partidos/1
+
+### Actualizar partido
+PUT http://localhost:8088/partidos/1
+Content-Type: application/json
+
+{
+  "ligaId": 1,
+  "clubLocalId": 1,
+  "clubVisitaId": 2,
+  "estadioId": 1,
+  "nombreLocal": "Barcelona",
+  "nombreVisita": "Real Madrid",
+  "golesLocal": 3,
+  "golesVisita": 1,
+  "estado": "FINALIZADO"
+}
+
+### Eliminar partido
+DELETE http://localhost:8088/partidos/1
