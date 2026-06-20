@@ -9,15 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>cl.duoc</groupId>
-<<<<<<< HEAD
 	<artifactId>lesiones</artifactId>
-=======
-<<<<<<< HEAD
-	<artifactId>jugadores</artifactId>
-=======
-	<artifactId>ligas</artifactId>
->>>>>>> 0be4bd329a9b4e87cfb4dab2233d764e14c4f93c
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
@@ -36,17 +28,9 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-<<<<<<< HEAD
 	</properties>
 	<dependencies>
 				<dependency>
-=======
-<<<<<<< HEAD
-	</properties>
-	<dependencies>
-
-		<dependency>
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
@@ -54,18 +38,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-<<<<<<< HEAD
-=======
-=======
-		<spring-cloud.version>2025.1.1</spring-cloud.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.8.9</version>
->>>>>>> 0be4bd329a9b4e87cfb4dab2233d764e14c4f93c
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 		</dependency>
 		<dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -86,16 +58,6 @@
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
->>>>>>> 0be4bd329a9b4e87cfb4dab2233d764e14c4f93c
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
@@ -104,25 +66,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
-<<<<<<< HEAD
-=======
-=======
-			<artifactId>spring-boot-starter-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
->>>>>>> 0be4bd329a9b4e87cfb4dab2233d764e14c4f93c
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 		</dependency>
 
 		<dependency>
@@ -147,10 +95,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 			<artifactId>spring-boot-starter-webflux-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -191,10 +135,7 @@
             <artifactId>java-jwt</artifactId>
             <version>4.4.0</version>
         </dependency>
-<<<<<<< HEAD
 
-=======
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -214,36 +155,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-<<<<<<< HEAD
-=======
-=======
-			<artifactId>spring-boot-starter-webmvc-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
-    		<groupId>org.springframework.cloud</groupId>
-    		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
->>>>>>> 0be4bd329a9b4e87cfb4dab2233d764e14c4f93c
->>>>>>> 35fd69e62755442a4e4842371606df94780c2052
 
 	<build>
 		<plugins>
