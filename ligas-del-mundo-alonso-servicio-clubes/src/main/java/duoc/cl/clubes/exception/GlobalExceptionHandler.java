@@ -1,38 +1,55 @@
 package duoc.cl.clubes.exception;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import duoc.cl.clubes.dto.DtoApiError;
-
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<DtoApiError> handleResourceNotFound(ResourceNotFoundException ex, HttpServletRequest request) {
-        DtoApiError error = DtoApiError.builder()
-                .timestamp(LocalDate.now()) 
-                .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
-                .message(ex.getMessage())
-                .path(request.getRequestURI())
-                .claseException(ex.getClass().getSimpleName())
-                .build();
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex){
+        Map<String, String> errores = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), error.getDefaultMessage());
+        });
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errores);
     }
 
-@ExceptionHandler(java.net.ConnectException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<DtoApiError> handleNotFound(ResourceNotFoundException ex, HttpServletRequest request){
+        DtoApiError error = DtoApiError.builder()
+            .timestamp(LocalDate.now())
+            .status(HttpStatus.NOT_FOUND.value())
+            .error(HttpStatus.NOT_FOUND.getReasonPhrase())
+            .message(ex.getMessage())
+            .path(request.getRequestURI())
+            .claseException("ResourceNotFoundException.class")
+            .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntime(RuntimeException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    } 
+
+    @ExceptionHandler(java.net.ConnectException.class)
     public ResponseEntity<DtoApiError> handleConnectionError(java.net.ConnectException ex, HttpServletRequest request) {
         DtoApiError error = DtoApiError.builder()
                 .timestamp(LocalDate.now()) 
                 .status(HttpStatus.SERVICE_UNAVAILABLE.value())
                 .error(HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase())
-                .message("El microservicio dependiente no está disponible o está apagado.")
+                .message("El microservicio de ligas dependiente no está disponible o está apagado.")
                 .path(request.getRequestURI())
                 .claseException(ex.getClass().getSimpleName())
                 .build();
@@ -44,12 +61,11 @@ public class GlobalExceptionHandler {
         DtoApiError error = DtoApiError.builder()
                 .timestamp(LocalDate.now()) 
                 .status(ex.getStatusCode().value())
-                .error("Error de comunicación entre microservicios")
+                .error("Error de comunicación entre microservicios (Clubes -> Ligas)")
                 .message("El servicio externo respondió con error: " + ex.getStatusText())
                 .path(request.getRequestURI())
                 .claseException(ex.getClass().getSimpleName())
                 .build();
         return new ResponseEntity<>(error, ex.getStatusCode());
     }
-
 }
