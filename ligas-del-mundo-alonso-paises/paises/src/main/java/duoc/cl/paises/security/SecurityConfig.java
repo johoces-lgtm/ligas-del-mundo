@@ -11,15 +11,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final JwtValidationFilter jwtValidationFilter;
+
+    public SecurityConfig(JwtValidationFilter jwtValidationFilter) {
+        this.jwtValidationFilter = jwtValidationFilter;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/error").permitAll() 
+                .requestMatchers(
+                    "/v3/api-docs",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html",
+                    "/doc/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/swagger-resources/**",
+                    "/webjars/**",
+                    "/swagger-ui/index.html",
+                    "/doc/swagger-ui/index.html",
+                    "/doc/swagger-ui/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(new JwtValidationFilter(), UsernamePasswordAuthenticationFilter.class)
-            .build();
+            .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 }
