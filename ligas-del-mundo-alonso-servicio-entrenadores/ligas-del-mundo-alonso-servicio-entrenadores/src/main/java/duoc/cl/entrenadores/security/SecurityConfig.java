@@ -11,8 +11,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtValidationFilter jwtValidationFilter;
+    private final JwtValidationFilter jwtValidationFilter;
+
+    // Inyeccion por constructor limpia (Sin usar @Autowired de forma directa)
+    public SecurityConfig(JwtValidationFilter jwtValidationFilter) {
+        this.jwtValidationFilter = jwtValidationFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -20,9 +24,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/v1/auth/login",
                     "/doc/swagger-ui.html",
-                    "/doc/swagger-ui/index.html",
                     "/doc/swagger-ui/**",
                     "/v3/api-docs",
                     "/v3/api-docs/**"

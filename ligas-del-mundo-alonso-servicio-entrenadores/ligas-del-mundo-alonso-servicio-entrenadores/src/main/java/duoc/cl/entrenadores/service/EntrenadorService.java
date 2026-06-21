@@ -21,12 +21,12 @@ public class EntrenadorService {
     private final ClubClient clubClient;
 
     public DtoEntrenadorResponse crear(DtoEntrenadorRequest request) {
-        log.info("Iniciando creación de entrenador: {}", request.getNombre());
+        log.info("Iniciando creacion de entrenador: {}", request.getNombre());
 
         boolean existeElClub = clubClient.validarClub(request.getIdClub());
 
         if (!existeElClub) {
-            log.error("Validación fallida: El club con ID {} no existe.", request.getIdClub());
+            log.error("Validacion fallida: El club con ID {} no existe en la base central.", request.getIdClub());
             throw new ResourceNotFoundException("No se puede registrar al entrenador. El club con ID " + request.getIdClub() + " no existe.");
         }
 
@@ -43,7 +43,7 @@ public class EntrenadorService {
     }
 
     public List<DtoEntrenadorResponse> listar() {
-        log.info("Recuperando listado de entrenadores");
+        log.info("Recuperando listado completo de entrenadores");
         return repository.findAll().stream()
                 .map(this::mapearAResponse)
                 .collect(Collectors.toList());
@@ -60,11 +60,20 @@ public class EntrenadorService {
         return mapearAResponse(model);
     }
 
+    public void eliminar(Long id) {
+        log.info("Eliminando de persistencia el entrenador con ID: {}", id);
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("No se puede eliminar. Entrenador no encontrado con ID: " + id);
+        }
+        repository.deleteById(id);
+    }
+
     private DtoEntrenadorResponse mapearAResponse(EntrenadorModel model) {
         return DtoEntrenadorResponse.builder()
                 .id(model.getId())
                 .nombre(model.getNombre())
                 .nacionalidad(model.getNacionalidad())
+                .idClub(model.getIdClub())
                 .build();
     }
 }

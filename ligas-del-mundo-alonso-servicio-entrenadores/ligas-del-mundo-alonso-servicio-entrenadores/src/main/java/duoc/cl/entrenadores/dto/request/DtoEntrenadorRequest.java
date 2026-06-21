@@ -1,5 +1,6 @@
 package duoc.cl.entrenadores.dto.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,18 +10,18 @@ import jakarta.validation.constraints.NotNull;
 public class DtoEntrenadorRequest {
 
     @NotNull(message = "El ID del entrenador no puede ser nulo")
-    @Schema(description = "Identificador único del entrenador", example = "1")
+    @Schema(description = "Identificador unico del entrenador", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long id;
 
     @NotBlank(message = "El nombre del entrenador es obligatorio")
-    @Schema(description = "Nombre completo del director técnico", example = "Pep Guardiola")
+    @Schema(description = "Nombre completo del director tecnico", example = "Pep Guardiola", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nombre;
 
-    @NotBlank(message = "La nacionalidad no puede estar vacía")
-    @Schema(description = "País de origen del entrenador", example = "Española")
+    @NotBlank(message = "La nacionalidad no puede estar vacia")
+    @Schema(description = "Pais de origen del entrenador", example = "Española", requiredMode = Schema.RequiredMode.REQUIRED)
     private String nacionalidad;
 
     @NotNull(message = "El ID del club es obligatorio")
-    @Schema(description = "ID del club al que está asignado", example = "10")
+    @Schema(description = "ID del club al que esta asignado", example = "10", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long idClub;
 }
