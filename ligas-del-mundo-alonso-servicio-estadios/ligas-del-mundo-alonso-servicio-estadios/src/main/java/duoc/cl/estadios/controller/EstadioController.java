@@ -1,17 +1,13 @@
 package duoc.cl.estadios.controller;
 
-import duoc.cl.estadios.dto.response.DtoEstadioResponse;
 import duoc.cl.estadios.dto.request.DtoEstadioRequest;
-import duoc.cl.estadios.service.EstadioService;
+import duoc.cl.estadios.dto.response.DtoEstadioResponse;
 import duoc.cl.estadios.dto.DtoApiError;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import duoc.cl.estadios.service.EstadioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,73 +16,47 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/estadios")
 @RequiredArgsConstructor
-@Slf4j // Activamos los logs
-@Tag(name = "Estadios", description = "API para gestionar los estadios de los clubes")
+@Tag(name = "Estadios", description = "Endpoints para la administracion de estadios deportivos con validacion externa")
 public class EstadioController {
 
     private final EstadioService estadioService;
 
+    @Operation(summary = "Crear nuevo estadio", description = "Inserta un nuevo estadio en el sistema validando sincronamente que el ID de pais exista en el microservicio externo.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Estadio guardado con exito", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Atributos invalidos provistos en el Request Body", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "404", description = "Fallo de integridad: El ID de pais no fue encontrado externamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno no controlado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    })
     @PostMapping
-    @Operation(summary = "Registrar un estadio", description = "Crea un nuevo registro de un estadio en la base de datos")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Estadio creado correctamente",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al crear el estadio",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
-    })
-    public ResponseEntity<DtoEstadioResponse> crear(@Valid @RequestBody DtoEstadioRequest dto) {
-        log.info("POST /api/estadios - Registrando nuevo estadio: {}", dto.getNombre());
-        return new ResponseEntity<>(estadioService.crear(dto), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public DtoEstadioResponse crear(@RequestBody @Valid DtoEstadioRequest request) {
+        return estadioService.crearEstadio(request);
     }
 
-    @GetMapping
-    @Operation(summary = "Listar estadios", description = "Obtiene una lista con todos los estadios registrados")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Lista de estadios obtenida correctamente",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
-        @ApiResponse(responseCode = "204", description = "No hay estadios registrados",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al obtener la lista de estadios",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    @Operation(summary = "Obtener estadio por ID", description = "Busca el registro de un estadio por su ID unico.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Estadio retornado correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Estadio no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno en el servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
-    public ResponseEntity<List<DtoEstadioResponse>> listar() {
-        log.info("GET /api/estadios - Solicitando lista completa de estadios");
-        return ResponseEntity.ok(estadioService.listar());
-    }
-
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar por ID", description = "Busca un estadio específico mediante su identificador único")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Estadio encontrado correctamente",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
-        @ApiResponse(responseCode = "404", description = "Estadio no encontrado",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al buscar el estadio",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
-    })
-    public ResponseEntity<DtoEstadioResponse> buscarPorId(@PathVariable Long id) {
-        log.info("GET /api/estadios/{} - Buscando estadio específico", id);
-        return ResponseEntity.ok(estadioService.buscarPorId(id));
+    public DtoEstadioResponse obtenerPorId(@PathVariable Long id) {
+        return estadioService.obtenerEstadioPorId(id);
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Eliminar estadio", description = "Elimina un estadio de la base de datos usando su ID")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Estadio eliminado correctamente",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "404", description = "Estadio no encontrado",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al eliminar el estadio",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
+    @Operation(summary = "Listar todos los estadios", description = "Recupera una coleccion completa de todos los estadios dados de alta.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Coleccion cargada correctamente", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
+        @ApiResponse(responseCode = "500", description = "Error del sistema", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        log.info("DELETE /api/estadios/{} - Eliminando estadio", id);
-        estadioService.eliminar(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping
+    public List<DtoEstadioResponse> listarTodos() {
+        return estadioService.obtenerTodos();
     }
 }

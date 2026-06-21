@@ -1,22 +1,18 @@
 package duoc.cl.estadios.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-@Schema(description = "Objeto que representa la respuesta con los datos de un Estadio")
 public class DtoEstadioResponse {
-
-    @Schema(description = "Identificador único del estadio", example = "1")
+    @Schema(description = "ID unico en persistencia", example = "12")
     private Long id;
-
-    @Schema(description = "Nombre oficial del estadio", example = "Estadio Nacional")
+    @Schema(description = "Nombre del complejo deportivo", example = "Estadio Nacional")
     private String nombre;
-
-    @Schema(description = "Capacidad máxima de espectadores", example = "48000")
+    @Schema(description = "Capacidad total", example = "45000")
     private Integer capacidad;
-
-    @Schema(description = "Identificador del país donde se encuentra el estadio", example = "5")
+    @Schema(description = "ID del pais al que pertenece", example = "45")
     private Long idPais;
 }

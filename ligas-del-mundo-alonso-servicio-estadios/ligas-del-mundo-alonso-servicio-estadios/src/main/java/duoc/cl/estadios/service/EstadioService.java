@@ -21,13 +21,13 @@ public class EstadioService {
     private final PaisClient paisClient;
 
     public DtoEstadioResponse crearEstadio(DtoEstadioRequest request) {
-        log.info("Iniciando creación de estadio ID: {}. Validando país ID: {}", request.getId(), request.getIdPais());
+        log.info("Iniciando creacion de estadio ID: {}. Validando pais ID: {}", request.getId(), request.getIdPais());
         
-        Boolean paisValido = paisClient.validarPais(request.getIdPais()).block();
+        boolean paisValido = paisClient.validarPais(request.getIdPais());
         
-        if (Boolean.FALSE.equals(paisValido)) {
-            log.error("Validación fallida: País con ID {} no existe", request.getIdPais());
-            throw new ResourceNotFoundException("El país referenciado no existe.");
+        if (!paisValido) {
+            log.error("Validacion fallida: Pais con ID {} no existe en servicio-paises", request.getIdPais());
+            throw new ResourceNotFoundException("El pais referenciado no existe.");
         }
 
         EstadioModel modelo = new EstadioModel();
@@ -43,17 +43,17 @@ public class EstadioService {
     }
 
     public DtoEstadioResponse obtenerEstadioPorId(Long id) {
-        log.info("Buscando estadio por ID: {}", id);
         EstadioModel modelo = estadioRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.error("Estadio no encontrado con ID: {}", id);
-                    return new ResourceNotFoundException("Estadio no encontrado");
-                });
+                .orElseThrow(() -> new ResourceNotFoundException("Estadio no encontrado con ID: " + id));
+        
+        if (!paisClient.validarPais(modelo.getIdPais())) {
+            throw new ResourceNotFoundException("El pais de este estadio ya no existe o no se encuentra disponible.");
+        }
         return mapearAResponse(modelo);
     }
 
     public List<DtoEstadioResponse> obtenerTodos() {
-        log.info("Obteniendo listado de todos los estadios");
+        paisClient.pingPaises(); 
         return estadioRepository.findAll().stream()
                 .map(this::mapearAResponse)
                 .collect(Collectors.toList());

@@ -57,10 +57,10 @@ public class JwtValidationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
 
         } catch (Exception e) {
-            logger.error("Fallo crítico de seguridad - JWT Inválido: " + e.getMessage());
+            logger.error("Fallo critico de seguridad - JWT Invalido en Estadios: " + e.getMessage());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Acceso Denegado: Token invalido, modificado o expirado\"}");
+            response.getWriter().write("{\"error\": \"Acceso Denegado: Token invalido o modificado\"}");
             return;
         }
 
