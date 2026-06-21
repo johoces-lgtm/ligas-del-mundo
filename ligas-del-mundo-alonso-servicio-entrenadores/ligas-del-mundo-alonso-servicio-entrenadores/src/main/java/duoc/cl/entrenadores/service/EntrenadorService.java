@@ -60,6 +60,11 @@ public class EntrenadorService {
         return mapearAResponse(model);
     }
 
+    public void eliminar(Long id) {
+        EntrenadorModel entrenador = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El entrenador con ID " + id + " no existe."));
+        repository.delete(entrenador);
+    }
+
     private DtoEntrenadorResponse mapearAResponse(EntrenadorModel model) {
         return DtoEntrenadorResponse.builder()
                 .id(model.getId())

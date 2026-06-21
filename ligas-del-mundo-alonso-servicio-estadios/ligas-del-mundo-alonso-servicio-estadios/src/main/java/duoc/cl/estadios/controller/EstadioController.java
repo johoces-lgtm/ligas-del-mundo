@@ -41,7 +41,7 @@ public class EstadioController {
     })
     public ResponseEntity<DtoEstadioResponse> crear(@Valid @RequestBody DtoEstadioRequest dto) {
         log.info("POST /api/estadios - Registrando nuevo estadio: {}", dto.getNombre());
-        return new ResponseEntity<>(estadioService.crear(dto), HttpStatus.CREATED);
+        return new ResponseEntity<>(estadioService.crearEstadio(dto), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -56,7 +56,7 @@ public class EstadioController {
     })
     public ResponseEntity<List<DtoEstadioResponse>> listar() {
         log.info("GET /api/estadios - Solicitando lista completa de estadios");
-        return ResponseEntity.ok(estadioService.listar());
+        return ResponseEntity.ok(estadioService.obtenerTodos());
     }
 
     @GetMapping("/{id}")
@@ -71,7 +71,7 @@ public class EstadioController {
     })
     public ResponseEntity<DtoEstadioResponse> buscarPorId(@PathVariable Long id) {
         log.info("GET /api/estadios/{} - Buscando estadio específico", id);
-        return ResponseEntity.ok(estadioService.buscarPorId(id));
+        return ResponseEntity.ok(estadioService.obtenerEstadioPorId(id));
     }
 
     @DeleteMapping("/{id}")
