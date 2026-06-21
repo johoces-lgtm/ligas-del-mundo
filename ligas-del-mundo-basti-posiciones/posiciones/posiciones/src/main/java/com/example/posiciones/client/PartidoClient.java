@@ -12,7 +12,7 @@ public class PartidoClient {
     private final WebClient webClient;
 
     public PartidoClient(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8088/api/partidos").build();
+        this.webClient = webClientBuilder.baseUrl("http://servicio-partidos/api/partidos").build();
     }
 
     public List<PartidoResponseDto> obtenerPartidos() {
@@ -28,6 +28,6 @@ public class PartidoClient {
     }
 
     public void pingPartidos() {
-        webClient.options().uri("http://localhost:8088/api/partidos").retrieve().toBodilessEntity().block();
+        webClient.options().retrieve().toBodilessEntity().block();
     }
 }

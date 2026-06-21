@@ -11,7 +11,7 @@ public class ClubesClient {
     private final WebClient webClient;
 
     public ClubesClient(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8082/api/clubes").build();
+        this.webClient = webClientBuilder.baseUrl("http://servicio-clubes/api/clubes").build();
     }
 
     public DtoClubesResponse obtenerClubPorId(Long id) {
