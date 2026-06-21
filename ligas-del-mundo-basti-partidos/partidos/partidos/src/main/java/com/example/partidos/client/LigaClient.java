@@ -9,18 +9,19 @@ public class LigaClient {
 
     private final WebClient webClient;
 
-    public LigaClient(WebClient webClient) {
-        this.webClient = webClient;
+    public LigaClient(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://servicio-ligas").build();
     }
 
     public LigaDto obtenerLiga(Long id) {
-        return webClient
-            .get()
-            .uri("http://localhost:8083/api/ligas/" + id)
-            .retrieve()
-            .bodyToMono(LigaDto.class)
-            .block();
+        return webClient.get()
+                .uri("/api/ligas/" + id)
+                .retrieve()
+                .bodyToMono(LigaDto.class)
+                .block();
     }
 
-    public void pingLigas() { webClient.options().uri("http://localhost:8081/api/ligas").retrieve().toBodilessEntity().block(); }
+    public void pingLigas() { 
+        webClient.options().uri("/api/ligas").retrieve().toBodilessEntity().block(); 
+    }
 }

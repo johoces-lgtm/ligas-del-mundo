@@ -9,19 +9,19 @@ public class ClubClient {
 
     private final WebClient webClient;
 
-    public ClubClient(WebClient webClient) {
-        this.webClient = webClient;
+    public ClubClient(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://servicio-clubes").build();
     }
 
     public ClubDto obtenerClub(Long id) {
-
-        return webClient
-                .get()
-                .uri("http://localhost:8082/api/clubes/" + id)
+        return webClient.get()
+                .uri("/api/clubes/" + id)
                 .retrieve()
                 .bodyToMono(ClubDto.class)
                 .block();
     }
 
-    public void pingClubes() { webClient.options().uri("http://localhost:8082/api/clubes").retrieve().toBodilessEntity().block(); }
+    public void pingClubes() { 
+        webClient.options().uri("/api/clubes").retrieve().toBodilessEntity().block(); 
+    }
 }
