@@ -1,0 +1,81 @@
+services:
+  bd-mysql:
+    image: mysql:8.0
+    container_name: bd-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "21999288-2"
+    ports:
+      - "3306:3306"
+    volumes:
+      - data_mysql:/var/lib/mysql
+    networks:
+      - red-futbol
+
+  servidor-eureka:
+    build: ./2026_1_FullStack1_api-gateway-main
+    container_name: servidor-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - red-futbol
+
+  servicio-usuarios:
+    build: ./ligas-del-mundo-basti-usuarios/usuarios
+    container_name: servicio-usuarios
+    ports:
+      - "8091:8091"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_usuarios?createDatabaseIfNotExist=true&useSSL=false
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - bd-mysql
+      - servidor-eureka
+    networks:
+      - red-futbol
+
+  servicio-auth:
+    build: ./ligas-del-mundo-basti-auth/auth
+    container_name: servicio-auth
+    ports:
+      - "8090:8090"
+    environment:
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - servidor-eureka
+    networks:
+      - red-futbol
+
+  servicio-partidos:
+    build: ./ligas-del-mundo-basti-partidos/partidos
+    container_name: servicio-partidos
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_partidos?createDatabaseIfNotExist=true&useSSL=false
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - bd-mysql
+      - servidor-eureka
+    networks:
+      - red-futbol
+
+  servicio-posiciones:
+    build: ./ligas-del-mundo-basti-posiciones/posiciones/posiciones  # <-- Cambiado con la ruta correcta
+    container_name: servicio-posiciones
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_posiciones?createDatabaseIfNotExist=true&useSSL=false
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - bd-mysql
+      - servidor-eureka
+    networks:
+      - red-futbol
+
+volumes:
+  data_mysql:
+
+networks:
+  red-futbol:
+    driver: bridge
