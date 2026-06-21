@@ -11,7 +11,7 @@ public class ClubesClient {
     private final WebClient webClient;
 
     public ClubesClient(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8082/api/clubes").build();
+        this.webClient = webClientBuilder.baseUrl("http://servicio-clubes/api/clubes").build();
     }
 
     public DtoClubesResponse obtenerClubPorId(Long id) {
@@ -23,14 +23,20 @@ public class ClubesClient {
                     .block();
         } catch (WebClientResponseException.NotFound e) {
             return null;
-        } 
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void pingClubes() {
-        this.webClient.options()
-                .uri("") 
-                .retrieve()
-                .toBodilessEntity()
-                .block();
+        try {
+            this.webClient.options()
+                    .uri("") 
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
+        } catch (Exception e) {
+
+        }
     }
 }
