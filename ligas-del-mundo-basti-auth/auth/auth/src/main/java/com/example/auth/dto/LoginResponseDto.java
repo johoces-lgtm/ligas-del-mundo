@@ -9,9 +9,9 @@ import lombok.Data;
 @Schema(description = "Respuesta del servidor con el token generado")
 public class LoginResponseDto {
 
-    @Schema(description = "Token JWT en formato String compacto", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+    @Schema(description = "Token JWT en formato String compacto")
     private String token;
 
-    @Schema(description = "Mensaje informativo sobre el estado del login", example = "Login correcto")
+    @Schema(description = "Mensaje informativo sobre el estado del login")
     private String mensaje;
 }

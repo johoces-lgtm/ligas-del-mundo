@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import com.example.auth.dto.LoginRequestDto;
 import com.example.auth.dto.LoginResponseDto;
 import com.example.auth.service.AuthService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -23,14 +22,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @Operation(
-        summary = "Iniciar sesión de usuario", 
-        description = "Valida las credenciales otorgadas y genera un token JWT firmado de duración limitada si los datos coinciden."
-    )
+    @Operation(summary = "Iniciar sesión de usuario", description = "Valida las credenciales otorgadas y genera un token JWT firmado si los datos coinciden.")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Autenticación exitosa. Se retorna el token generado"),
-        @ApiResponse(responseCode = "401", description = "Credenciales incorrectas o usuario no encontrado"),
-        @ApiResponse(responseCode = "500", description = "Falla de comunicación con el almacenamiento persistente de usuarios")
+        @ApiResponse(responseCode = "401", description = "Credenciales incorrectas o usuario no encontrado")
     })
     public LoginResponseDto login(@RequestBody LoginRequestDto dto) {
         return service.login(dto);
