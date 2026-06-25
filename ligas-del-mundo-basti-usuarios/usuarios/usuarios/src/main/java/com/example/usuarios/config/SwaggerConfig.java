@@ -1,4 +1,4 @@
-package com.example.usuarios.client;
+package com.example.usuarios.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

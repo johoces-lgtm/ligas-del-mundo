@@ -19,7 +19,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(null, null, new ArrayList<>());
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken("user@test.com", null, new ArrayList<>());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 

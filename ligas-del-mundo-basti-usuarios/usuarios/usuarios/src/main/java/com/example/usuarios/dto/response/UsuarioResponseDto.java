@@ -1,11 +1,14 @@
 package com.example.usuarios.dto.response;
 
-// IMPORTACIÓN DE SWAGGER
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Schema(description = "DTO que representa la información pública o de respuesta de un usuario")
 public class UsuarioResponseDto {
