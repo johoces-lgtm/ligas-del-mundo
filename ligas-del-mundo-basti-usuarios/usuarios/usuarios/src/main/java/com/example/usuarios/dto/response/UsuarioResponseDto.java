@@ -1,6 +1,5 @@
 package com.example.usuarios.dto.response;
 
-// IMPORTACIÓN DE SWAGGER
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

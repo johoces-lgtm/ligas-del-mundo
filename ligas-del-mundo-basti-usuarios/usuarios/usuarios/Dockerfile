@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 COPY mvnw .
@@ -11,4 +12,15 @@ FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8091
+=======
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 ENTRYPOINT ["java", "-jar", "app.jar"]

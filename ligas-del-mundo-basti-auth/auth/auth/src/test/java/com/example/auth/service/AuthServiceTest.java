@@ -1,7 +1,10 @@
 package com.example.auth.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+<<<<<<< HEAD
 import static org.mockito.ArgumentMatchers.*;
+=======
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 import static org.mockito.Mockito.*;
 
 import com.example.auth.client.UsuarioClient;
@@ -58,6 +61,7 @@ class AuthServiceTest {
         assertNotNull(respuesta);
         assertNotNull(respuesta.getToken());
     }
+<<<<<<< HEAD
 
     @Test
     void login_debeLanzarExcepcionConCredencialesNulas() {
@@ -70,4 +74,6 @@ class AuthServiceTest {
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> service.login(request))
                 .isInstanceOf(Exception.class); 
     }
+=======
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 }

@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.example.auth.controller.AuthControllerTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.121 s -- in com.example.auth.controller.AuthControllerTest
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.688 s -- in com.example.auth.controller.AuthControllerTest
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec

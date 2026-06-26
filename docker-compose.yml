@@ -1,17 +1,27 @@
+<<<<<<< HEAD
 version: '3.8'
 
+=======
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 services:
   bd-mysql:
     image: mysql:8.0
     container_name: bd-mysql
     environment:
+<<<<<<< HEAD
       MYSQL_ROOT_PASSWORD: "system"
     ports:
       - "3307:3306"
+=======
+      MYSQL_ROOT_PASSWORD: "21999288-2"
+    ports:
+      - "3306:3306"
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     volumes:
       - data_mysql:/var/lib/mysql
     networks:
       - red-futbol
+<<<<<<< HEAD
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psystem"]
       interval: 10s
@@ -21,11 +31,18 @@ services:
   eureka-server:
     build: ./ligas-del-mundo-eureka
     container_name: eureka-server
+=======
+
+  servidor-eureka:
+    build: ./2026_1_FullStack1_api-gateway-main
+    container_name: servidor-eureka
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     ports:
       - "8761:8761"
     networks:
       - red-futbol
 
+<<<<<<< HEAD
   api-gateway:
     build: ./2026_1_FullStack1_api-gateway-main
     container_name: api-gateway
@@ -41,10 +58,15 @@ services:
   # --- SERVICIOS BASTI ---
   servicio-usuarios:
     build: ./ligas-del-mundo-basti-usuarios/usuarios/usuarios
+=======
+  servicio-usuarios:
+    build: ./ligas-del-mundo-basti-usuarios/usuarios
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     container_name: servicio-usuarios
     ports:
       - "8091:8091"
     environment:
+<<<<<<< HEAD
       - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_usuarios?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=system
@@ -52,15 +74,27 @@ services:
     depends_on:
       - bd-mysql
       - eureka-server
+=======
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_usuarios?createDatabaseIfNotExist=true&useSSL=false
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - bd-mysql
+      - servidor-eureka
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     networks:
       - red-futbol
 
   servicio-auth:
+<<<<<<< HEAD
     build: ./ligas-del-mundo-basti-auth/auth/auth
+=======
+    build: ./ligas-del-mundo-basti-auth/auth
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     container_name: servicio-auth
     ports:
       - "8090:8090"
     environment:
+<<<<<<< HEAD
       - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_auth?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=system
@@ -68,10 +102,16 @@ services:
     depends_on:
       - bd-mysql
       - eureka-server
+=======
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - servidor-eureka
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     networks:
       - red-futbol
 
   servicio-partidos:
+<<<<<<< HEAD
     build: ./ligas-del-mundo-basti-partidos/partidos/partidos
     container_name: servicio-partidos
     ports:
@@ -84,10 +124,23 @@ services:
     depends_on:
       - bd-mysql
       - eureka-server
+=======
+    build: ./ligas-del-mundo-basti-partidos/partidos
+    container_name: servicio-partidos
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_partidos?createDatabaseIfNotExist=true&useSSL=false
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - bd-mysql
+      - servidor-eureka
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     networks:
       - red-futbol
 
   servicio-posiciones:
+<<<<<<< HEAD
     build: ./ligas-del-mundo-basti-posiciones/posiciones/posiciones
     container_name: servicio-posiciones
     ports:
@@ -230,6 +283,18 @@ services:
     depends_on:
       - bd-mysql
       - eureka-server
+=======
+    build: ./ligas-del-mundo-basti-posiciones/posiciones/posiciones  # <-- Cambiado con la ruta correcta
+    container_name: servicio-posiciones
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bd-mysql:3306/bd_posiciones?createDatabaseIfNotExist=true&useSSL=false
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://servidor-eureka:8761/eureka/
+    depends_on:
+      - bd-mysql
+      - servidor-eureka
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     networks:
       - red-futbol
 

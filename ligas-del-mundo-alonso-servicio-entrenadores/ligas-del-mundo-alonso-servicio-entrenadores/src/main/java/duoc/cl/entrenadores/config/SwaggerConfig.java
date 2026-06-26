@@ -1,5 +1,6 @@
 package duoc.cl.entrenadores.config;
 
+<<<<<<< HEAD
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -9,6 +10,15 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+=======
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 
 @Configuration
 public class SwaggerConfig {
@@ -21,7 +31,7 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("API Entrenadores")
                         .version("1.0")
-                        .description("Api que gestiona los datos de directores técnicos y entrenadores de las 7 ligas más importantes del mundo (Premier League, La Liga, Serie A, Bundesliga, Ligue 1, MLS y Saudí Pro League)."))
+                        .description("Api que gestiona los datos de directores técnicos y entrenadores de las ligas mas importantes. Validada por JWT y conectada mediante WebClient."))
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName, new SecurityScheme()

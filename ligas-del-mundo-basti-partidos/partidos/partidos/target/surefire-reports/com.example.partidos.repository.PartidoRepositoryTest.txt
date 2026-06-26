@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.example.partidos.repository.PartidoRepositoryTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.097 s -- in com.example.partidos.repository.PartidoRepositoryTest
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.330 s -- in com.example.partidos.repository.PartidoRepositoryTest
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec

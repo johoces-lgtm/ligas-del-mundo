@@ -5,7 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.example.partidos.model.Partido;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+=======
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
@@ -35,6 +39,7 @@ class PartidoRepositoryTest {
 
         assertNotNull(guardado.getId());
     }
+<<<<<<< HEAD
 
     @Test
     void existsById_debeRetornarFalsoSiNoExiste() {
@@ -47,4 +52,6 @@ class PartidoRepositoryTest {
         // THEN: El repositorio debe confirmar que el registro no existe
         org.assertj.core.api.Assertions.assertThat(existe).isFalse();
     }
+=======
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 }

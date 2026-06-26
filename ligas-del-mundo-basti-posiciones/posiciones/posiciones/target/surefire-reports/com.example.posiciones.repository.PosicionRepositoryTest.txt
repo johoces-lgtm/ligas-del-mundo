@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.example.posiciones.repository.PosicionRepositoryTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.986 s -- in com.example.posiciones.repository.PosicionRepositoryTest
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.699 s -- in com.example.posiciones.repository.PosicionRepositoryTest
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec

@@ -12,24 +12,37 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtValidationFilter jwtValidationFilter;
+    private final JwtValidationFilter jwtValidationFilter;
+
+    public SecurityConfig(JwtValidationFilter jwtValidationFilter) {
+        this.jwtValidationFilter = jwtValidationFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/estadios/**").permitAll()
                 .requestMatchers(
+<<<<<<< HEAD
                     "/api/v1/auth/**", 
                     "/v3/api-docs/**", 
                     "/swagger-ui/**", 
                     "/swagger-ui.html"
+=======
+                    "/v3/api-docs",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html",
+                    "/doc/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/doc/swagger-ui/**"
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
                 ).permitAll()
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+            .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 }

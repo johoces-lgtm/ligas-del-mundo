@@ -23,6 +23,7 @@ class JwtValidationFilterTest {
 
         assertNotNull(SecurityContextHolder.getContext().getAuthentication());
     }
+<<<<<<< HEAD
 
     @Test
     void doFilter_debeBloquearCuandoNoHayToken() throws Exception {
@@ -39,4 +40,6 @@ class JwtValidationFilterTest {
         // THEN
         org.assertj.core.api.Assertions.assertThat(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
+=======
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 }

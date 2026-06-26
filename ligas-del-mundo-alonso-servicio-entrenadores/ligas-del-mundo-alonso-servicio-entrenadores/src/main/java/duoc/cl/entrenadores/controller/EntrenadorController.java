@@ -1,6 +1,5 @@
 package duoc.cl.entrenadores.controller;
 
-
 import duoc.cl.entrenadores.dto.request.DtoEntrenadorRequest;
 import duoc.cl.entrenadores.dto.response.DtoEntrenadorResponse;
 import duoc.cl.entrenadores.service.EntrenadorService;
@@ -23,22 +22,28 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/entrenadores")
 @RequiredArgsConstructor
-@Slf4j // Activamos los logs
-@Tag(name = "Entrenadores", description = "API para gestionar los directores técnicos del sistema")
+@Slf4j
+@Tag(name = "Entrenadores", description = "API para gestionar los directores tecnicos del sistema")
 public class EntrenadorController {
 
     private final EntrenadorService entrenadorService;
 
     @PostMapping
-    @Operation(summary = "Registrar un entrenador", description = "Crea un nuevo registro de un entrenador en la base de datos")
+    @Operation(summary = "Registrar un entrenador", description = "Crea un nuevo registro de un entrenador validando externamente que el club exista.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Entrenador creado correctamente",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEntrenadorResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida",
+        @ApiResponse(responseCode = "400", description = "Solicitud invalida por errores de validacion",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+<<<<<<< HEAD
         @ApiResponse(responseCode = "404", description = "El Club ingresado no existe", 
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor al crear el entrenador",
+=======
+        @ApiResponse(responseCode = "404", description = "El Club referenciado no existe",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
     public ResponseEntity<DtoEntrenadorResponse> crear(@Valid @RequestBody DtoEntrenadorRequest dto) {
@@ -51,9 +56,7 @@ public class EntrenadorController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista de entrenadores obtenida correctamente",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEntrenadorResponse.class))),
-        @ApiResponse(responseCode = "204", description = "No hay entrenadores registrados",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al obtener la lista de entrenadores",
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
     public ResponseEntity<List<DtoEntrenadorResponse>> listar() {
@@ -62,28 +65,27 @@ public class EntrenadorController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar por ID", description = "Busca un entrenador específico mediante su identificador único")
+    @Operation(summary = "Buscar por ID", description = "Busca un entrenador especifico mediante su identificador unico")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Entrenador encontrado correctamente",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEntrenadorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Entrenador no encontrado",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al buscar el entrenador",
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
     public ResponseEntity<DtoEntrenadorResponse> buscarPorId(@PathVariable Long id) {
-        log.info("GET /api/entrenadores/{} - Buscando entrenador específico", id);
+        log.info("GET /api/entrenadores/{} - Buscando entrenador especifico", id);
         return ResponseEntity.ok(entrenadorService.buscarPorId(id));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar entrenador", description = "Elimina un entrenador de la base de datos usando su ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Entrenador eliminado correctamente",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "204", description = "Entrenador eliminado correctamente"),
         @ApiResponse(responseCode = "404", description = "Entrenador no encontrado",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al eliminar el entrenador",
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {

@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.example.partidos.security.JwtValidationFilterTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.example.partidos.security.JwtValidationFilterTest
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.example.partidos.security.JwtValidationFilterTest
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec

@@ -21,12 +21,12 @@ public class EntrenadorService {
     private final ClubClient clubClient;
 
     public DtoEntrenadorResponse crear(DtoEntrenadorRequest request) {
-        log.info("Iniciando creación de entrenador: {}", request.getNombre());
+        log.info("Iniciando creacion de entrenador: {}", request.getNombre());
 
         boolean existeElClub = clubClient.validarClub(request.getIdClub());
 
         if (!existeElClub) {
-            log.error("Validación fallida: El club con ID {} no existe.", request.getIdClub());
+            log.error("Validacion fallida: El club con ID {} no existe en la base central.", request.getIdClub());
             throw new ResourceNotFoundException("No se puede registrar al entrenador. El club con ID " + request.getIdClub() + " no existe.");
         }
 
@@ -43,7 +43,7 @@ public class EntrenadorService {
     }
 
     public List<DtoEntrenadorResponse> listar() {
-        log.info("Recuperando listado de entrenadores");
+        log.info("Recuperando listado completo de entrenadores");
         return repository.findAll().stream()
                 .map(this::mapearAResponse)
                 .collect(Collectors.toList());
@@ -61,8 +61,16 @@ public class EntrenadorService {
     }
 
     public void eliminar(Long id) {
+<<<<<<< HEAD
         EntrenadorModel entrenador = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El entrenador con ID " + id + " no existe."));
         repository.delete(entrenador);
+=======
+        log.info("Eliminando de persistencia el entrenador con ID: {}", id);
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("No se puede eliminar. Entrenador no encontrado con ID: " + id);
+        }
+        repository.deleteById(id);
+>>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     }
 
     private DtoEntrenadorResponse mapearAResponse(EntrenadorModel model) {
@@ -70,6 +78,7 @@ public class EntrenadorService {
                 .id(model.getId())
                 .nombre(model.getNombre())
                 .nacionalidad(model.getNacionalidad())
+                .idClub(model.getIdClub())
                 .build();
     }
 }

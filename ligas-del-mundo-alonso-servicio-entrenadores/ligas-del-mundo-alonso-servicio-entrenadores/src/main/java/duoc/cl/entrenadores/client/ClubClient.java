@@ -1,6 +1,7 @@
-package duoc.cl.entrenadores.client; 
+package duoc.cl.entrenadores.client;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -11,12 +12,12 @@ public class ClubClient {
 
     private final WebClient webClient;
 
-    public ClubClient(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8082").build();
+    public ClubClient(WebClient.Builder webClientBuilder, @Value("${clubes.url:http://localhost:8082}") String urlClubes) {
+        this.webClient = webClientBuilder.baseUrl(urlClubes).build();
     }
 
     public boolean validarClub(Long clubId) {
-        log.info("Validando club para entrenador, ID: {}", clubId);
+        log.info("Validando club para entrenador, ID externo: {}", clubId);
         try {
             webClient.get()
                     .uri("/api/clubes/{id}", clubId)
@@ -25,11 +26,11 @@ public class ClubClient {
                     .block();
             return true;
         } catch (WebClientResponseException.NotFound ex) {
-            log.warn("El club {} no existe (404)", clubId);
+            log.warn("El club con ID {} no existe en el sistema (404)", clubId);
             return false;
         } catch (Exception ex) {
-            log.error("Error validando club: {}", ex.getMessage());
-            throw new RuntimeException("Servicio de clubes no disponible");
+            log.error("Error critico validando club: {}", ex.getMessage());
+            return false;
         }
     }
 }
