@@ -20,13 +20,12 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/entrenadores/**").permitAll()
                 .requestMatchers(
-                    "/api/v1/auth/login",
-                    "/doc/swagger-ui.html",
-                    "/doc/swagger-ui/index.html",
-                    "/doc/swagger-ui/**",
-                    "/v3/api-docs",
-                    "/v3/api-docs/**"
+                    "/api/v1/auth/**", 
+                    "/v3/api-docs/**", 
+                    "/swagger-ui/**", 
+                    "/swagger-ui.html"
                 ).permitAll()
                 .anyRequest().authenticated()
             )

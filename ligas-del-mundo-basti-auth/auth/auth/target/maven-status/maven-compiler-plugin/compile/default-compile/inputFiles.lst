@@ -1,0 +1,12 @@
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\AuthApplication.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\client\UsuarioClient.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\config\SwaggerConfig.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\config\WebClientConfig.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\controller\AuthController.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\dto\LoginRequestDto.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\dto\LoginResponseDto.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\dto\UsuarioDto.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\security\JwtValidationFilter.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\security\SecurityConfig.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\service\AuthService.java
+C:\Users\joaqu\Desktop\Proyectos FullStack\ligas-del-mundo\ligas-del-mundo-basti-auth\auth\auth\src\main\java\com\example\auth\service\JwtService.java

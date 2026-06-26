@@ -59,11 +59,12 @@ public class ClubesController {
         return ResponseEntity.ok(clubesService.buscarPorId(id));
     }
 
-    @Operation(summary = "Registrar un nuevo club", description = "Crea un club en el sistema validando previamente que el ID del país asociado exista.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Club creado correctamente",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoClubesResponse.class))),
         @ApiResponse(responseCode = "400", description = "Solicitud inválida",
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "404", description = "La Liga asociada no existe", 
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor al crear el club",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))

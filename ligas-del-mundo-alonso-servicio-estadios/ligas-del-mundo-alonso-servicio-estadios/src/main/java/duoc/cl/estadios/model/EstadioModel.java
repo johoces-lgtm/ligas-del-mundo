@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Data
+@NoArgsConstructor 
+@AllArgsConstructor
 @Entity
 @Table(name = "estadios")
 public class EstadioModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, length = 10)
     private Long id;
     

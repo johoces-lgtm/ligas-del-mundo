@@ -21,7 +21,7 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                
+                .requestMatchers("/api/clubes/**").permitAll()
                 .requestMatchers(
                     "/api/v1/auth/**", 
                     "/v3/api-docs/**", 

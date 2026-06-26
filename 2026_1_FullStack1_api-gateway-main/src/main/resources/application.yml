@@ -15,73 +15,73 @@ spring:
             - id: auth-service
               uri: lb://servicio-auth
               predicates:
-                - Path=/api/v1/auth/**
+                - Path=/api/auth/**
 
             # 2. Microservicio Países
             - id: paises-service
               uri: lb://servicio-paises
               predicates:
-                - Path=/api/v1/paises/**
+                - Path=/api/paises/**
 
             # 3. Microservicio Clubes
             - id: clubes-service
               uri: lb://servicio-clubes
               predicates:
-                - Path=/api/v1/clubes/**
+                - Path=/api/clubes/**
 
             # 4. Microservicio Estadios
             - id: estadios-service
               uri: lb://servicio-estadios
               predicates:
-                - Path=/api/v1/estadios/**
+                - Path=/api/estadios/**
 
             # 5. Microservicio Entrenadores
             - id: entrenadores-service
               uri: lb://servicio-entrenadores
               predicates:
-                - Path=/api/v1/entrenadores/**
+                - Path=/api/entrenadores/**
 
             # 6. Microservicio Lesiones
             - id: lesiones-service
               uri: lb://servicio-lesiones
               predicates:
-                - Path=/api/v1/lesiones/**
+                - Path=/api/lesiones/**
 
             # 7. Microservicio Ligas
             - id: ligas-service
               uri: lb://servicio-ligas
               predicates:
-                - Path=/api/v1/ligas/**
+                - Path=/api/ligas/**
 
             # 8. Microservicio Jugadores
             - id: jugadores-service
               uri: lb://servicio-jugadores
               predicates:
-                - Path=/api/v1/jugadores/**
+                - Path=/api/jugadores/**
 
-            # 9. Microservicio Football API
+            # 9. Microservicio Football API (¡Corregido a /sync!)
             - id: football-api-service
               uri: lb://servicio-football-api
               predicates:
-                - Path=/api/v1/football-api/**
+                - Path=/api/sync/**
 
             # 10. Microservicio Posiciones
             - id: posiciones-service
               uri: lb://servicio-posiciones
               predicates:
-                - Path=/api/v1/posiciones/**
+                - Path=/api/posiciones/**
 
             # 11. Microservicio Usuarios
             - id: usuarios-service
               uri: lb://servicio-usuarios
               predicates:
-                - Path=/api/v1/usuarios/**
+                - Path=/api/usuarios/**
 
             # 12. Microservicio Partidos
             - id: partidos-service
               uri: lb://servicio-partidos
               predicates:
-                - Path=/api/v1/partidos/**
+                - Path=/api/partidos/**
 
 eureka:
   client:

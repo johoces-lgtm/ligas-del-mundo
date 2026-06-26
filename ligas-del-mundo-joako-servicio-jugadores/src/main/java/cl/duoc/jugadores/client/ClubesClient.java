@@ -1,6 +1,8 @@
 package cl.duoc.jugadores.client;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -12,8 +14,9 @@ public class ClubesClient {
 
     private final WebClient webClient;
 
-    public ClubesClient(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://servicio-clubes").build();
+    public ClubesClient(WebClient.Builder webClientBuilder, 
+                        @Value("${clubes.api.url:http://localhost:8082}") String clubesUrl) {
+        this.webClient = webClientBuilder.baseUrl(clubesUrl).build();
     }
 
     public boolean validarClub(Long clubId) {

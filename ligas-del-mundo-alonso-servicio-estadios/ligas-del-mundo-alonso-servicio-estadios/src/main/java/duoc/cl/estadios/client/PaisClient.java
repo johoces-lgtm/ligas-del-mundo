@@ -9,8 +9,9 @@ import reactor.core.publisher.Mono;
 public class PaisClient {
     private final WebClient clienteWeb;
 
-    public PaisClient(WebClient.Builder constructorWebClient, @Value("${paises.url:http://localhost:8088}") String urlPaises) {
-        this.clienteWeb = constructorWebClient.baseUrl(urlPaises).build();
+    public PaisClient(WebClient.Builder webClientBuilder, 
+                      @Value("${paises.api.url:http://localhost:8085}") String paisesUrl) {
+        this.clienteWeb = webClientBuilder.baseUrl(paisesUrl).build();
     }
 
     public Mono<Boolean> validarPais(Long idPais) {

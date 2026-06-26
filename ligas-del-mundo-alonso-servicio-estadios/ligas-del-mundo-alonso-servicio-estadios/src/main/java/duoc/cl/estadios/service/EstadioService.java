@@ -60,11 +60,12 @@ public class EstadioService {
     }
 
     public void eliminar(Long id) {
-        log.info("Eliminando jugador ID: {}", id);
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("No se puede eliminar: Jugador no encontrado");
-        }
-        repository.deleteById(id);
+        log.info("Eliminando estadio con ID: {}", id);
+        EstadioModel estadio = estadioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("El estadio con ID " + id + " no existe."));
+        
+        estadioRepository.delete(estadio);
+        log.info("Estadio eliminado exitosamente");
     }
 
     private DtoEstadioResponse mapearAResponse(EstadioModel modelo) {

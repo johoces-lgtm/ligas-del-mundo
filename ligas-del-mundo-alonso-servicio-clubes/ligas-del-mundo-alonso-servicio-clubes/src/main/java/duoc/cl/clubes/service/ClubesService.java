@@ -6,8 +6,8 @@ import duoc.cl.clubes.dto.response.DtoClubesResponse;
 import duoc.cl.clubes.exception.ResourceNotFoundException;
 import duoc.cl.clubes.model.ClubesModel;
 import duoc.cl.clubes.repository.ClubesRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +15,11 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ClubesService {
 
-    @Autowired
-    private ClubesRepository clubesRepository;
-
-    @Autowired
-    private LigasClient ligasClient;
+    private final ClubesRepository clubesRepository;
+    private final LigasClient ligasClient;
 
     public List<DtoClubesResponse> listarTodos() {
         log.info("Consultando todos los clubes");
@@ -42,9 +40,9 @@ public class ClubesService {
     public DtoClubesResponse crear(DtoClubesRequest request) {
         log.info("Intentando crear club: {} para la liga ID: {}", request.getNombre(), request.getLigaId());
 
-        boolean existeLiga = ligasClient.validarLiga(request.getLigaId());
+        Boolean existeLiga = ligasClient.validarLiga(request.getLigaId()).block();
 
-        if (!existeLiga) {
+        if (Boolean.FALSE.equals(existeLiga)) {
             throw new ResourceNotFoundException("No se puede crear el club. La liga indicada (ID " + request.getLigaId() + ") no existe.");
         }
 

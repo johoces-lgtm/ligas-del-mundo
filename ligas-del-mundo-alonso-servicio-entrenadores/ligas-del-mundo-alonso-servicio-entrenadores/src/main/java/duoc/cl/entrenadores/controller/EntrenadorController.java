@@ -36,6 +36,8 @@ public class EntrenadorController {
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEntrenadorResponse.class))),
         @ApiResponse(responseCode = "400", description = "Solicitud inválida",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
+        @ApiResponse(responseCode = "404", description = "El Club ingresado no existe", 
+                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor al crear el entrenador",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
