@@ -1,5 +1,0 @@
-com\example\partidos\PartidosApplicationTests.class
-com\example\partidos\repository\PartidoRepositoryTest.class
-com\example\partidos\service\PartidoServiceTest.class
-com\example\partidos\controller\PartidoControllerTest.class
-com\example\partidos\security\JwtValidationFilterTest.class

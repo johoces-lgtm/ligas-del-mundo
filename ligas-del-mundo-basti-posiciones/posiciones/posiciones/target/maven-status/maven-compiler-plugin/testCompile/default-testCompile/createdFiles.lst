@@ -1,5 +1,0 @@
-com\example\posiciones\controller\PosicionControllerTest.class
-com\example\posiciones\security\JwtValidationFilterTest.class
-com\example\posiciones\service\PosicionServiceTest.class
-com\example\posiciones\PosicionesApplicationTests.class
-com\example\posiciones\repository\PosicionRepositoryTest.class

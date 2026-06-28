@@ -6,7 +6,10 @@ import duoc.cl.estadios.dto.DtoApiError;
 import duoc.cl.estadios.service.EstadioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/estadios")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Estadios", description = "Endpoints para la administracion de estadios deportivos con validacion externa")
 public class EstadioController {
 
@@ -34,24 +38,9 @@ public class EstadioController {
         @ApiResponse(responseCode = "500", description = "Error interno no controlado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
     @PostMapping
-<<<<<<< HEAD
-    @Operation(summary = "Registrar un estadio", description = "Crea un nuevo registro de un estadio en la base de datos")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Estadio creado correctamente",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEstadioResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Solicitud inválida",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor al crear el estadio",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
-    })
     public ResponseEntity<DtoEstadioResponse> crear(@Valid @RequestBody DtoEstadioRequest dto) {
         log.info("POST /api/estadios - Registrando nuevo estadio: {}", dto.getNombre());
         return new ResponseEntity<>(estadioService.crearEstadio(dto), HttpStatus.CREATED);
-=======
-    @ResponseStatus(HttpStatus.CREATED)
-    public DtoEstadioResponse crear(@RequestBody @Valid DtoEstadioRequest request) {
-        return estadioService.crearEstadio(request);
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     }
 
     @Operation(summary = "Obtener estadio por ID", description = "Busca el registro de un estadio por su ID unico.")
@@ -60,7 +49,6 @@ public class EstadioController {
         @ApiResponse(responseCode = "404", description = "Estadio no encontrado", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
         @ApiResponse(responseCode = "500", description = "Error interno en el servidor", content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
-<<<<<<< HEAD
     public ResponseEntity<List<DtoEstadioResponse>> listar() {
         log.info("GET /api/estadios - Solicitando lista completa de estadios");
         return ResponseEntity.ok(estadioService.obtenerTodos());
@@ -79,11 +67,6 @@ public class EstadioController {
     public ResponseEntity<DtoEstadioResponse> buscarPorId(@PathVariable Long id) {
         log.info("GET /api/estadios/{} - Buscando estadio específico", id);
         return ResponseEntity.ok(estadioService.obtenerEstadioPorId(id));
-=======
-    @GetMapping("/{id}")
-    public DtoEstadioResponse obtenerPorId(@PathVariable Long id) {
-        return estadioService.obtenerEstadioPorId(id);
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     }
 
     @Operation(summary = "Listar todos los estadios", description = "Recupera una coleccion completa de todos los estadios dados de alta.")

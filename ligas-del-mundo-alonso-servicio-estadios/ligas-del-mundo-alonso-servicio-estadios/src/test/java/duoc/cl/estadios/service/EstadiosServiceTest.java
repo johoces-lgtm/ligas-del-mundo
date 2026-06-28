@@ -44,7 +44,7 @@ class EstadiosServiceTest {
         modeloGuardado.setCapacidad(45000);
         modeloGuardado.setIdPais(5L);
 
-        when(paisClient.validarPais(5L)).thenReturn(Mono.just(true));
+        when(paisClient.validarPais(5L)).thenReturn(true);
         when(estadioRepository.save(any(EstadioModel.class))).thenReturn(modeloGuardado);
 
         DtoEstadioResponse resultado = estadioService.crearEstadio(request);

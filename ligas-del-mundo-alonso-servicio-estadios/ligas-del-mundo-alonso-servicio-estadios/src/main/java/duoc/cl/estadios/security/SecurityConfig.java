@@ -23,21 +23,13 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/estadios/**").permitAll()
                 .requestMatchers(
-<<<<<<< HEAD
-                    "/api/v1/auth/**", 
-                    "/v3/api-docs/**", 
-                    "/swagger-ui/**", 
-                    "/swagger-ui.html"
-=======
                     "/v3/api-docs",
                     "/v3/api-docs/**",
                     "/swagger-ui.html",
                     "/doc/swagger-ui.html",
                     "/swagger-ui/**",
                     "/doc/swagger-ui/**"
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
                 ).permitAll()
                 .anyRequest().authenticated()
             )

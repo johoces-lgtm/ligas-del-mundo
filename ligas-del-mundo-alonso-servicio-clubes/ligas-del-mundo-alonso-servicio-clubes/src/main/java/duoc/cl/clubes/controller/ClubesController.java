@@ -38,7 +38,7 @@ public class ClubesController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor al obtener la lista de clubes",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<List<DtoClubesResponse>> listarTodos() {
         log.info("GET /api/clubes - Solicitando lista completa");
         return ResponseEntity.ok(clubesService.listarTodos());

@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.example.partidos.PartidosApplicationTests
--------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.139 s -- in com.example.partidos.PartidosApplicationTests
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.238 s -- in com.example.partidos.PartidosApplicationTests
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec

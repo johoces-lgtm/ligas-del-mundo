@@ -9,14 +9,9 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 public class PaisClient {
     private final WebClient clienteWeb;
 
-<<<<<<< HEAD
     public PaisClient(WebClient.Builder webClientBuilder, 
                       @Value("${paises.api.url:http://localhost:8085}") String paisesUrl) {
         this.clienteWeb = webClientBuilder.baseUrl(paisesUrl).build();
-=======
-    public PaisClient(WebClient.Builder constructorWebClient, @Value("${paises.url:http://localhost:8085}") String urlPaises) {
-        this.clienteWeb = constructorWebClient.baseUrl(urlPaises).build();
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     }
 
     public boolean validarPais(Long idPais) {

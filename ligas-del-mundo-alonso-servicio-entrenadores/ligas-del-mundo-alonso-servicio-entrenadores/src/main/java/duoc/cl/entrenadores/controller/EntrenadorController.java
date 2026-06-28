@@ -35,15 +35,9 @@ public class EntrenadorController {
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoEntrenadorResponse.class))),
         @ApiResponse(responseCode = "400", description = "Solicitud invalida por errores de validacion",
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-<<<<<<< HEAD
         @ApiResponse(responseCode = "404", description = "El Club ingresado no existe", 
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor al crear el entrenador",
-=======
-        @ApiResponse(responseCode = "404", description = "El Club referenciado no existe",
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class))),
-        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
                      content = @Content(mediaType = "application/json", schema = @Schema(implementation = DtoApiError.class)))
     })
     public ResponseEntity<DtoEntrenadorResponse> crear(@Valid @RequestBody DtoEntrenadorRequest dto) {

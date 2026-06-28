@@ -42,7 +42,6 @@ class EntrenadoresControllerTest {
                 .id(1L)
                 .nombre("Ancelotti")
                 .nacionalidad("Italiana")
-                .edad(65)
                 .build();
     }
 

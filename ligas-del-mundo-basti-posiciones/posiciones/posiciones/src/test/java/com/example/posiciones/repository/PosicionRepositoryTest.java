@@ -6,11 +6,7 @@ import com.example.posiciones.model.Posicion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-=======
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest

@@ -61,16 +61,8 @@ public class EntrenadorService {
     }
 
     public void eliminar(Long id) {
-<<<<<<< HEAD
         EntrenadorModel entrenador = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El entrenador con ID " + id + " no existe."));
         repository.delete(entrenador);
-=======
-        log.info("Eliminando de persistencia el entrenador con ID: {}", id);
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("No se puede eliminar. Entrenador no encontrado con ID: " + id);
-        }
-        repository.deleteById(id);
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
     }
 
     private DtoEntrenadorResponse mapearAResponse(EntrenadorModel model) {

@@ -1,4 +1,0 @@
-com\example\auth\AuthApplicationTests.class
-com\example\auth\service\AuthServiceTest.class
-com\example\auth\controller\AuthControllerTest.class
-com\example\auth\security\JwtValidationFilterTest.class

@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.example.posiciones.controller.PosicionControllerTest
--------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.331 s -- in com.example.posiciones.controller.PosicionControllerTest
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.208 s -- in com.example.posiciones.controller.PosicionControllerTest
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec

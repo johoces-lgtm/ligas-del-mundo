@@ -1,0 +1,13 @@
+# Ignorar carpetas de compilacion en todos los niveles
+**/target/
+*.jar
+*.class
+
+# Ignorar archivos de logs y textos temporales
+*.log
+*.txt
+
+# Ignorar configuraciones de IDE
+.idea/
+.vscode/
+*.iml

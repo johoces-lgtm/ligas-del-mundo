@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.example.auth.service.AuthServiceTest
--------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.692 s -- in com.example.auth.service.AuthServiceTest
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.172 s -- in com.example.auth.service.AuthServiceTest
->>>>>>> 00384755d7d4fa3093b0f1d952b4d7af320b4aec
